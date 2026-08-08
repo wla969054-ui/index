@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کاروانِ شہداءِ حقانیہ - پورٹل</title>
+    <!-- اردو نفیس و جمیل نستعلیق اور خطِ کوفی -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Reem+Kufi:wght@600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #12372A;
+            --secondary: #d4af37;
+            --accent-red: #800000;
+            --dark-red: #4a0000;
+            --bg-body: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-dark: #1a1a1a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Nastaliq Urdu', serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 2.3;
+            padding-bottom: 60px;
+        }
+
+        /* شاہانہ مین ہیڈر */
+        header {
+            background: linear-gradient(135deg, #09261e, var(--primary), #000000);
+            color: var(--secondary);
+            text-align: center;
+            padding: 50px 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            border-bottom: 6px solid var(--secondary);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+        }
+
+        header p {
+            color: #e0e0e0;
+            font-size: 1.25rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* رنگین پھولوں اور اسلامی فریم والی ہیڈنگ */
+        .floral-frame {
+            position: relative;
+            text-align: center;
+            padding: 25px;
+            margin: 30px 0;
+            background: linear-gradient(145deg, #ffffff, #fffdfa);
+            border: 3px double var(--secondary);
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .floral-frame::before {
+            content: '🌸 🕌 🌹 🕌 🌸';
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .floral-frame::after {
+            content: '🌸 🕌 🌹 🕌 🌸';
+            font-size: 1.4rem;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .floral-title {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            padding: 0 20px;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        /* شہداء کے گرڈ کارڈز */
+        .martyrs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .martyr-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.35s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .martyr-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+        }
+
+        .martyr-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .martyr-card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        .martyr-card p {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* پروفیشنل اینیمیٹڈ بٹن */
+        .btn {
+            background: linear-gradient(45deg, var(--primary), #2d6a4f);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.05rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, var(--secondary), #b8860b);
+            color: #000;
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.4);
+        }
+
+        /* انفرادی شہید کا پیج (Single Page View) */
+        .profile-page {
+            display: none;
+            background: #fff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .profile-page.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* نیویگیشن ٹیبز */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            background: #f1f5f9;
+            color: #333;
+            border: 1px solid #cbd5e1;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.05rem;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* ٹیب مواد */
+        .tab-content {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* معلومات کا ٹیبل */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .info-table th, .info-table td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: right;
+        }
+
+        .info-table th {
+            background-color: #f8fafc;
+            color: var(--primary);
+            width: 28%;
+            font-weight: bold;
+        }
+
+        /* جگر سوز اشعار کا فریم بکس */
+        .poetry-box {
+            background: linear-gradient(135deg, #fff5f5, #ffe6e6);
+            border: 2px solid var(--accent-red);
+            border-right: 8px solid var(--accent-red);
+            padding: 30px 20px;
+            margin: 25px 0;
+            border-radius: 12px;
+            font-size: 1.35rem;
+            text-align: center;
+            color: var(--dark-red);
+            line-height: 2.6;
+            box-shadow: 0 4px 15px rgba(128, 0, 0, 0.08);
+            font-weight: bold;
+        }
+
+        .poetry-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--accent-red);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: #475569;
+            margin-bottom: 25px;
+        }
+
+        .back-btn:hover {
+            background: #1e293b;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.9rem; }
+            .nav-tabs { flex-direction: column; }
+            .info-table th, .info-table td { display: block; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>کاروانِ شہداءِ حقانیہ</h1>
+        <p>جامعہ دارالعلوم حقانیہ اکوڑہ خٹک کے نامور اکابرین و علماءِ کرام کی لازوال قربانیوں کا یادگار پورٹل</p>
+    </header>
+
+    <div class="container">
+        <!-- 1. تمام شہداء کی مرکزی فہرست (Home Landing Page) -->
+        <div id="home-view">
+            <div class="floral-frame">
+                <div class="floral-title">عظیم شہداءِ حقانیہ کا گلدستہ</div>
+            </div>
+
+            <div class="martyrs-grid">
+                <!-- 1. مولانا حسن جان -->
+                <div class="martyr-card">
+                    <h3>مولانا حسن جان شہید</h3>
+                    <p>سابق شیخ الحدیث و عظیم علمی و سیاسی قائد</p>
+                    <button class="btn" onclick="openProfile('hasan-jan')">خصوصی ویب پورٹل کھولیں</button>
+                </div>
+
+                <!-- 2. مولانا رحیم اللہ حقانی -->
+                <div class="martyr-card">
+                    <h3>مولانا رحیم اللہ حقانی شہید</h3>
+                    <p>ممتاز عالمِ دین، مجاہدِ نڈر و محقق</p>
+                    <button class="btn" onclick="openProfile('rahimullah')">خصوصی ویب پورٹل کھولیں</button>
+                </div>
+
+                <!-- 3. مولانا سردار علی حقانی -->
+                <div class="martyr-card">
+                    <h3>مولانا سردار علی حقانی شہید</h3>
+                    <p>مقبول عام شعلہ بیان خطیب و داعیِ اسلام</p>
+                    <button class="btn" onclick="openProfile('sardar-ali')">خصوصی ویب پورٹل کھولیں</button>
+                </div>
+
+                <!-- 4. مولانا سمیع الحق -->
+                <div class="martyr-card">
+                    <h3>شیخ الحدیث مولانا سمیع الحق شہید</h3>
+                    <p>مجاہدِ ملت، قائدِ جلیل و بانیِ حقانیہ ثانی</p>
+                    <button class="btn" onclick="openProfile('samai-ul-haq')">خصوصی ویب پورٹل کھولیں</button>
+                </div>
+
+                <!-- 5. مولانا حامد الحق -->
+                <div class="martyr-card">
+                    <h3>مولانا حامد الحق شہید</h3>
+                    <p>حقانی مشن کے پاسبان و عظیم رہنما</p>
+                    <button class="btn" onclick="openProfile('hamid-ul-haq')">خصوصی ویب پورٹل کھولیں</button>
+                </div>
+
+                <!-- 6. مولانا محمد ادریس -->
+                <div class="martyr-card">
+                    <h3>شیخ الحدیث مولانا محمد ادریس شہید</h3>
+                    <p>استادِ حدیث، صاحبِ زہد و علمی شخصیت</p>
+                    <button class="btn" onclick="openProfile('idrees')">خصوصی ویب پورٹل کھولیں</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. انفرادی شہید کا مکمل ویب پورٹل -->
+        <div id="profile-view" class="profile-page">
+            <button class="btn back-btn" onclick="showHome()">← تمام شہداء کے مرکزی پورٹل پر جائیں</button>
+            
+            <div class="floral-frame">
+                <div class="floral-title" id="profile-name">شہید کا نام</div>
+            </div>
+
+            <!-- نیویگیشن ٹیبز -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-home')">1. Home Page</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-life')">2. کوائف، پیدائش و حالاتِ زندگی</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-about')">3. About Page</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-services')">4. Service Page</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-martyrdom')">5. سانحہ وفات، جنازہ و اشعار</button>
+            </div>
+
+            <!-- 1. Home Tab -->
+            <div id="tab-home" class="tab-content active">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">خوش آمدید!</h3>
+                <p id="prof-home-desc" style="font-size: 1.15rem;">یہ انفرادی پورٹل شہید کی عظیم دینی، سیاسی اور تعلیمی خدمات کو خراجِ تحسین پیش کرنے کے لیے بنایا گیا ہے۔</p>
+            </div>
+
+            <!-- 2. Name, DOB, Life Tab -->
+            <div id="tab-life" class="tab-content">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">ابتدائی کوائف و حالاتِ زندگی</h3>
+                <table class="info-table">
+                    <tr><th>اسمِ گرامی</th><td id="info-name">-</td></tr>
+                    <tr><th>والدِ محترم کا نام</th><td id="info-father">-</td></tr>
+                    <tr><th>تاریخ و مقامِ پیدائش</th><td id="info-dob">-</td></tr>
+                    <tr><th>مقامِ رہائش</th><td id="info-residence">-</td></tr>
+                    <tr><th>تربیت و ابتدائی تعلیم</th><td id="info-edu">-</td></tr>
+                    <tr><th>خلاصہ حالاتِ زندگی</th><td id="info-bio">-</td></tr>
+                    <tr><th>تاریخِ شہادت / وفات</th><td id="info-death">-</td></tr>
+                </table>
+            </div>
+
+            <!-- 3. About Tab -->
+            <div id="tab-about" class="tab-content">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">عظیم شخصیت و کردار (About)</h3>
+                <p id="prof-about-text" style="font-size: 1.15rem; text-align: justify;"></p>
+            </div>
+
+            <!-- 4. Service Tab -->
+            <div id="tab-services" class="tab-content">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">دینی و ملکی خدمات (Services)</h3>
+                <ul id="prof-services-list" style="margin-right: 25px; font-size: 1.1rem;"></ul>
+            </div>
+
+            <!-- 5. سانحہ وفات، جنازہ، تدفین اور پرجوش اشعار -->
+            <div id="tab-martyrdom" class="tab-content">
+                <h3 style="color: var(--accent-red); margin-bottom: 10px;">سانحہِ وفات، جنازہ اور تدفین کا احوال</h3>
+                <p id="prof-death-detail" style="font-size: 1.15rem; background: #fff8f8; padding: 20px; border-radius: 10px; border: 1px solid #fecaca; text-align: justify;"></p>
+                
+                <div class="floral-frame">
+                    <div class="floral-title" style="color: var(--accent-red);">شہادت پر دل کو رلا دینے والے پرجوش اشعار</div>
+                </div>
+
+                <div class="poetry-title">📜 جذبات سے لبریز سوزناک اشعار 📜</div>
+                <div class="poetry-box" id="prof-poetry">
+                    <!-- اشعار جاوا اسکرپٹ سے آئیں گے -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تمام 6 اکابرین کا الگ الگ تفصیلی اور جوشیلہ ڈیٹا
+        const martyrsData = {
+            'hasan-jan': {
+                name: "مولانا حسن جان شہید",
+                father: "علی رحم خان",
+                dob: "1938ء - چارسدہ",
+                residence: "پشاور، خیبر پختونخوا",
+                edu: "جامعہ دارالعلوم حقانیہ اکوڑہ خٹک، مدینہ منورہ یونیورسٹی",
+                bio: "آپ ایک عظیم شیخ الحدیث، سابق رکن قومی اسمبلی اور علمی و سیاسی دنیا کے درخشندہ ستارے تھے۔",
+                death: "15 ستمبر 2007ء",
+                about: "حضرت مولانا حسن جان شہید رحمہ اللہ اپنے دور کے امام اور جلیل القدر محدث تھے۔ آپ کی عاجزی اور علمی تبحر بے مثال تھا۔ آپ نے ہمیشہ امتی کے اتحاد اور دینی مدارس کی بقاء کے لیے کام کیا۔",
+                services: [
+                    "جامعہ امداد العلوم پشاور میں سالہا سال بطور شیخ الحدیث خدمات",
+                    "پاکستان کی قومی اسمبلی میں دینی احکامات کی ترجمانی",
+                    "متعدد فقہی و علمی کتب کی تصنیف"
+                ],
+                deathDetail: "15 ستمبر 2007ء کو رمضان المبارک کے بابرکت مہینے میں افطاری سے کچھ دیر قبل سازشی عناصر نے پشاور میں آپ کو گولیوں کا نشانہ بنا کر مظلومانہ شہید کر دیا۔ آپ کے جنازے میں لاکھوں کی تعداد میں اشکبار مریدین اور علماء نے شرکت کی اور آپ کو چارسدہ میں سپردِ خاک کیا گیا۔",
+                poetry: `شہادت سے ہوئی روشن تیری پرنور پیشانی<br>تو صدیوں تک یاد آئے گا اے پیکرِ ربانی!<br><br>لہو تیرا پکارے گا حقیقت حق پرستی کی<br>ہماری جان بھی قربان تیرے عزمِ ایمانی!`
+            },
+
+            'rahimullah': {
+                name: "مولانا رحیم اللہ حقانی شہید",
+                father: "مفتی محمد بشیر",
+                dob: "1982ء - افغانستان/پشاور",
+                residence: "پشاور / کابل",
+                edu: "جامعہ دارالعلوم حقانیہ اکوڑہ خٹک",
+                bio: "آپ ایک نڈر، باصلاحیت عالمِ دین، اور باطل نظریات کے خلاف سیسہ پلائی دیوار تھے۔",
+                death: "11 اگست 2022ء",
+                about: "مولانا رحیم اللہ حقانی شہید نے اپنی نوعمری اور علمی دور سے ہی باطل فرقوں اور فتنوں کا جرات سے مقابلہ کیا۔ آپ کا مطالعہ انتہائی وسیع اور گفتگو دلیل سے پر ہوتی تھی۔",
+                services: [
+                    "کابل اور پشاور میں عظیم الشان دینی مدارس کا قیام",
+                    "ردِّ فتن اور دفاعِ سنت پر تاریخی مناظرے و خطبات",
+                    "سینکڑوں حفاظ و علماء کی دینی پرورش"
+                ],
+                deathDetail: "11 اگست 2022ء کو کابل میں آپ کے مدرسے کے اندر ایک بزدلانہ خودکش دھماکے میں آپ کو شہید کر دیا گیا۔ آپ کو باطل قوتوں نے راستے سے ہٹانے کی کوشش کی لیکن آپ کی شہادت نے حق کو اور زیادہ جلا بخشی۔ آپ کے جنازے میں پورے خطے کے جلیل القدر علماء نے گہرے غم و الم کے ساتھ شرکت کی اور آپ کو سپردِ خاک کیا گیا۔",
+                poetry: `تو کٹ گیا پر جرات کا پرچم نہ گرنے دیا<br>باطل کی کسی سازش کو تو نے نہ چلنے دیا!<br><br>تیرے لہو کی سرخیاں گواہی دیتی رہیں گی<br>حق کے لیے جینا ہی اصل زندگی کی نشانی!`
+            },
+
+            'sardar-ali': {
+                name: "مولانا سردار علی حقانی شہید",
+                father: "محترم یاسین صاحب",
+                dob: "درہ آدم خیل / نوشہرہ",
+                residence: "نوشہرہ، خیبر پختونخوا",
+                edu: "جامعہ دارالعلوم حقانیہ اکوڑہ خٹک",
+                bio: "آپ ایک پرجوش، شعلہ بیان خطیب تھے جن کی آواز سے باطل کے ایوان کانپ اٹھتے تھے۔",
+                death: "7 مئی 2021ء",
+                about: "مولانا سردار علی حقانی وہ خطیبِ حق تھے جنہوں نے اپنے منفرد اندازِ بیان سے لاکھوں جوانوں کو دین کی طرف راغب کیا۔ آپ کا دل عشقِ رسول اور حبِ صحابہ سے لبریز تھا۔",
+                services: [
+                    "پختونخوا اور ملک بھر میں دینِ اسلام کی تبلیغ کے لیے مسلسل اسفار",
+                    "عوام الناس میں ایمانی جوش اور بیداری پیدا کرنا",
+                    "مظلوموں کی آواز بننا اور حق بات برملا کہنا"
+                ],
+                deathDetail: "آپ کا سانحہِ وفات و شہادت انتہائی الم ناک تھا۔ ایک سفر کے دوران حادثاتی سانحے میں آپ ہم سے جدا ہو گئے۔ آپ کے جنازے میں آپ کے لاکھوں شیدائی اور عقیدت مند داڑھیوں کو آنسوؤں سے تر کیے شریک ہوئے اور غم میں ڈوبے دلوں کے ساتھ آپ کی تدفین کی گئی۔",
+                poetry: `خاموش ہو گئی وہ کڑکتی ہوئی صدا<br>لیکن دلوں میں گونجے گی آوازِ حق سدا!<br><br>اے خطیبِ حق! تیرا خطبہ تلاطم خیز تھا<br>روتا ہے ہر جگر تیری فرقت کے موڑ پر!`
+            },
+
+            'samai-ul-haq': {
+                name: "شیخ الحدیث مولانا سمیع الحق شہید",
+                father: "حضرت مولانا عبدالحق رحمہ اللہ",
+                dob: "18 دسمبر 1937ء - اکوڑہ خٹک",
+                residence: "اکوڑہ خٹک، نوشہرہ",
+                edu: "جامعہ دارالعلوم حقانیہ اکوڑہ خٹک",
+                bio: "آپ مجاہدِ ملت، بابائے طالبان اور بانیِ حقانیہ ثانی کے نام سے دنیا بھر میں معروف تھے۔",
+                death: "2 نومبر 2018ء",
+                about: "حضرت شیخ الحدیث مولانا سمیع الحق رحمہ اللہ نہ صرف ایک عظیم استادِ حدیث تھے بلکہ عالمِ اسلام کے مظلوموں کی آواز تھے۔ آپ نے پاکستان میں نظامِ مصطفیٰ کی جدوجہد کے لیے اپنی پوری زندگی وقف رکھی۔",
+                services: [
+                    "جامعہ دارالعلوم حقانیہ اکوڑہ خٹک کی سرپرستی اور ہزاروں محدثین کی تربیت",
+                    "پاکستان کی ایوانِ بالا (سینیٹ) میں دینی قوانین کی منظوری کا کام",
+                    "دفاعِ پاکستان کونسل اور اتحادِ بین المسلمین کی قیادت"
+                ],
+                deathDetail: "2 نومبر 2018ء کو راولپنڈی کی رہائش گاہ پر بزدلانہ حملہ کر کے آپ کو مظلومانہ شہید کیا گیا۔ اکوڑہ خٹک میں آپ کا جنازہ پاکستان کی تاریخ کے عظیم الشان جنازوں میں سے ایک تھا جس میں لاکھوں کا مجمع زار و قطار رو رہا تھا۔",
+                poetry: `قبائے نور سے سج کر، لہو سے باوضو ہو کر<br>وہ پہنچے بارگاہِ حق میں کیسے سرخ رُو ہو کر!<br><br>مٹا سکے نہ کوئی تیرا عزمِ استوار<br>زندہ رہے گا نام تیرا تا بہ روزگار!`
+            },
+
+            'hamid-ul-haq': {
+                name: "مولانا حامد الحق شہید",
+                father: "مولانا سمیع الحق شہید",
+                dob: "اکوڑہ خٹک، نوشہرہ",
+                residence: "اکوڑہ خٹک",
+                edu: "جامعہ دارالعلوم حقانیہ",
+                bio: "آپ اپنے والدِ گرامی شہیدِ ملت کے مشن کو جرات کے ساتھ آگے بڑھانے والے پاسبانِ حقانیہ تھے۔",
+                death: "سانحہِ شہادت",
+                about: "مولانا حامد الحق شہید نے اپنے والد کی ناگہانی شہادت کے بعد ادارے اور تحریک کو سنبھالا اور جرات و بہادری کی تاریخ رقم کی۔ آپ اتحادِ امت کے زبردست داعی تھے۔",
+                services: [
+                    "دارالعلوم حقانیہ کے انتظامی امور کی باوقار دیکھ بھال",
+                    "سیاسی و مذہبی پلیٹ فارم سے دینی حقوق کا تحفظ",
+                    "حقانیہ کے ترجمان رسالے 'الحق' کی علمی سرپرستی"
+                ],
+                deathDetail: "والدِ گرامی کے نقشِ قدم پر چلتے ہوئے آپ نے بھی باطل کی آنکھوں میں آنکھیں ڈال کر بات کی اور بالآخر شہادت کا جام نوش کیا۔ آپ کی شہادت کے بعد دارالعلوم حقانیہ کے در و دیوار غم میں ڈوب گئے اور تمام محبین نے نم آنکھوں سے آپ کو اپنے عظیم والد کے جوار میں سپردِ خاک کیا۔",
+                poetry: `باپ کی راہ پہ بیٹا بھی قربان ہوا<br>حقانی کا ہر موڑ اب لہو سے گلستان ہوا!<br><br>غم کی گھٹائیں چھائیں مگر حوصلہ وہی<br>ہم زندہ قوم ہیں، ہمارا عزم جوان ہوا!`
+            },
+
+            'idrees': {
+                name: "شیخ الحدیث مولانا محمد ادریس شہید",
+                father: "علمی وروحانی شخصیت مولوی حکیم عبد الحق",
+                date: "1961ء",
+                dob: "خیبر پختونخوا",
+                residence: "چار سدہ ترنگزئی",
+                edu: "جامعہ دارالعلوم حقانیہ",
+                bio: "آپ جامعہ حقانیہ کے صفِ اول کے استادِ حدیث اور تقویٰ و طہارت کا مجسمہ تھے۔",
+                death: "5 مئی 2026ء",
+                about: "مولانا محمد ادریس شہید رحمہ اللہ نے اپنی تمام عمر بخاری و مسلم کے درجات پڑھانے میں گزاری۔ آپ کے چہرے سے زہد اور خوفِ خدا جھلکتا تھا۔",
+                services: [
+                    "جامعہ دارالعلوم حقانیہ میں مسلسل تین دہائیوں تک تدریسِ حدیث",
+                    "ہزاروں علمائے کرام کی فکری و اخلاقی تربیت",
+                    "اصلاحی و خانقاہی مجلسوں کے ذریعے تزکیہ نفس"
+                ],
+                deathDetail: "آپ کو بھی دشمنانِ دین نے مظلومانہ انداز میں گولیوں کا نشانہ بنا کر شہید کیا۔ آپ کی شہادت کی خبر سے پوری علمی دنیا سکتہ میں آ گئی۔ آپ کی نمازِ جنازہ میں شامل ہزاروں طلباء اور علماء اپنے محبوب استاد کی رخصت پر بلک بلک کر روئے اور آپ کی تدفین کی گئی۔",
+                poetry: `حدیثِ مصطفیٰ پڑھاتے پڑھاتے سو گئے آپ<br>لہو میں اپنے رُخ کو نکھار کر چلے گئے آپ!<br><br>وہ درسِ بخاری کا ہال روتا ہے آج بھی<br>جس محفل کی رونق کو دوبارہ نہ پا سکے ہم!`
+            }
+        };
+
+        // انفرادی شہید کا پورٹل کھولنے کا فنکشن
+        function openProfile(id) {
+            const data = martyrsData[id];
+            if(!data) return;
+
+            // DOM میں مواد داخل کرنا
+            document.getElementById('profile-name').innerText = data.name;
+            document.getElementById('info-name').innerText = data.name;
+            document.getElementById('info-father').innerText = data.father;
+            document.getElementById('info-dob').innerText = data.dob;
+            document.getElementById('info-residence').innerText = data.residence;
+            document.getElementById('info-edu').innerText = data.edu;
+            document.getElementById('info-bio').innerText = data.bio;
+            document.getElementById('info-death').innerText = data.death;
+            
+            document.getElementById('prof-home-desc').innerText = `خوش آمدید! یہ "کاروانِ شہداءِ حقانیہ" کا پورٹل ہے جو ${data.name} کی حیات و خدمات کے لیے مختص ہے۔`;
+            document.getElementById('prof-about-text').innerText = data.about;
+            document.getElementById('prof-death-detail').innerText = data.deathDetail;
+            document.getElementById('prof-poetry').innerHTML = data.poetry;
+
+            // Services List
+            const list = document.getElementById('prof-services-list');
+            list.innerHTML = '';
+            data.services.forEach(item => {
+                let li = document.createElement('li');
+                li.style.marginBottom = "8px";
+                li.innerText = item;
+                list.appendChild(li);
+            });
+
+            // View switch
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('profile-view').classList.add('active');
+            
+            // reset to first tab
+            resetTabs();
+            window.scrollTo(0, 0);
+        }
+
+        // Home View Back Function
+        function showHome() {
+            document.getElementById('profile-view').classList.remove('active');
+            document.getElementById('home-view').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Tab Switching Logic
+        function switchTab(evt, tabId) {
+            const tabcontents = document.querySelectorAll('.tab-content');
+            tabcontents.forEach(content => content.classList.remove('active'));
+
+            const tablinks = document.querySelectorAll('.tab-btn');
+            tablinks.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        function resetTabs() {
+            const tabcontents = document.querySelectorAll('.tab-content');
+            tabcontents.forEach(content => content.classList.remove('active'));
+
+            const tablinks = document.querySelectorAll('.tab-btn');
+            tablinks.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById('tab-home').classList.add('active');
+            tablinks[0].classList.add('active');
+        }
+    </script>
+</body>
+</html>
